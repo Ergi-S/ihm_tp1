@@ -1,15 +1,9 @@
 package rangeSlider;
 
 public class Curseur {
-	int x;
-	int y;
-	int w;
-	int h;
+	int valeur;
 	
-	public Curseur(int x, int y, int w, int h) {
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
+	public Curseur(int x) {
+		this.valeur = x;
 	}
 }

@@ -1,5 +1,7 @@
 package rangeSlider;
 import java.awt.Graphics;
+import java.awt.Rectangle;
+
 import javax.swing.JFrame;
 
 /*
@@ -7,11 +9,18 @@ import javax.swing.JFrame;
  */
 public class Frame extends JFrame {
 
-	Curseur [] ct;
 	
-	public Frame(Curseur [] ct) {
-		this.ct = ct;
+	
+	Rectangle rectInf = new Rectangle(100,100,30,30);
+	Rectangle rectSupp = new Rectangle(600,100,30,30);
+	Rectangle []rect = new Rectangle[] {rectInf,rectSupp};
+	
+
+	public Frame() {
+		
 		setSize(720, 400);
+	
+		
 		setTitle("Range Slider");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -22,8 +31,9 @@ public class Frame extends JFrame {
 	public void paint(Graphics g) {
 		super.paint(g);
 		g.drawRoundRect(90, 113, 550, 3, 10, 10);
-		for (Curseur c: ct) {
-			g.drawRect(c.x, c.y, c.w, c.h);
+		for (Rectangle c: rect) {
+			g.drawRect(c.x, c.y, c.width, c.height);
 		}
+		
 	}
 }
