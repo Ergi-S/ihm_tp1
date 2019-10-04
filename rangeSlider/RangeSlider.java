@@ -8,6 +8,11 @@ public class RangeSlider {
 	public static final int max = 10;
 
 	Curseur [] ct;
+	
+
+	enum  TypeCurseur {
+		Inferieur , Superieur
+	}
 
 	private int curs_inf;
 	private int curs_sup;
@@ -18,12 +23,13 @@ public class RangeSlider {
 		ct = new Curseur [] {curs_inf, curs_sup};
 	}
 
-	public void setCurseur(Curseur c, int v) throws Exception {
+	//0 = Inférieur, 1 = Supérieur
+	public void setCurseur(int c, int v) throws Exception {
 		switch(c) {
-		case Inferieur : 
+		case 0 : 
 			curs_inf = v;
 			break;
-		case Superieur : 
+		case 1 : 
 			curs_sup = v;
 			break;
 		default : 
