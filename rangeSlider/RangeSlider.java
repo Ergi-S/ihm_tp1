@@ -16,8 +16,8 @@ public class RangeSlider {
 	private int curs_sup;
 
 	public RangeSlider() {
-		Curseur curs_inf = new Curseur(0);
-		Curseur curs_sup = new Curseur(10);
+		Curseur curs_inf = new Curseur(0,20);
+		Curseur curs_sup = new Curseur(0,20);
 		ct = new Curseur [] {curs_inf, curs_sup};
 	}
 
