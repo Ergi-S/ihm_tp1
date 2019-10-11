@@ -8,6 +8,6 @@ public class Main {
 		Control c = new Control(r.ct,f);
 		f.addMouseListener(c);
 		f.addMouseMotionListener(c);
+		f.addKeyListener(c);
 	}
-
 }

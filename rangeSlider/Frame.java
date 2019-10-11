@@ -33,6 +33,7 @@ public class Frame extends JFrame {
 		setSize(720, 200);	
 		setTitle("Range Slider");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setFocusable(true);
 		setResizable(false);
 		setVisible(true);
 		this.paint(this.getGraphics());
