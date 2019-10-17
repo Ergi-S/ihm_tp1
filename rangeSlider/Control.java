@@ -247,12 +247,15 @@ public class Control implements MouseInputListener, KeyListener {
 					f.rect[0].x = f.xMax - 30;
 				} else if (f.rect[0].x + pas > f.rect[1].x) {
 					f.rect[0].x = f.rect[1].x;
+					ct[0].valeur = ct[1].valeur;
+				} else if (f.rect[0].x + pas > f.xMax - 30) {
+					f.rect[0].x = f.xMax - 30;
+					ct[0].valeur = ct[0].max;
 				} else {
 					ct[0].valeur++;
 					f.rect[0].x += pas;
-					this.f.vCurseurInf.setText("Curseur A : " + new Integer(ct[0].valeur).toString());
-
 				}
+				this.f.vCurseurInf.setText("Curseur A : " + new Integer(ct[0].valeur).toString());
 			}
 		} else if (ct[1].isSelected) {
 			pas = (f.xMax - 30 - f.xMin) / (ct[1].max - ct[1].min);
@@ -262,11 +265,17 @@ public class Control implements MouseInputListener, KeyListener {
 					f.rect[1].x = f.xMin;
 				} else if (f.rect[1].x - pas < f.rect[0].x) {
 					f.rect[1].x = f.rect[0].x;
-				} else {
+					ct[1].valeur = ct[0].valeur;
+				} else if (f.rect[1].x - pas < f.xMin) {
+					f.rect[1].x = f.xMin;
+					ct[1].valeur = ct[1].min;
+					} 
+				else {
 					ct[1].valeur--;
 					f.rect[1].x -= pas;
-					this.f.vCurseurSup.setText("Curseur B : " + new Integer(ct[1].valeur).toString());
+
 				}
+				this.f.vCurseurSup.setText("Curseur B : " + new Integer(ct[1].valeur).toString());
 			}
 			if ((key = e.getKeyCode()) == KeyEvent.VK_RIGHT) {
 				//System.out.println("Curseur gauche touche right");

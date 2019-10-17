@@ -1,42 +1,38 @@
 package rangeSlider;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /*
  * Fenetre: View
  */
-public class Frame extends JFrame {
+public class Frame extends JPanel {
 
 	
 	Rectangle []rect;
-	public final int xMin = 100;
-	public final int xMax = 500;
+	public int xMin = 100;
+	public int xMax = 500;
 	public JLabel vCurseurInf = new JLabel("0");
 	public JLabel vCurseurSup = new JLabel("0");
 	
 
-	public Frame() {
-		
-
+	public Frame(int xMin, int xMax) {
+		this.xMin = xMin;
+		this.xMax = xMax;
 		Rectangle rectInf = new Rectangle(xMin,100,30,30);
 		Rectangle rectSupp = new Rectangle(xMax-30,100,30,30);
 		rect = new Rectangle[] {rectInf,rectSupp};
-		JPanel panel = (JPanel) this.getContentPane();
-		panel.add(vCurseurInf,BorderLayout.WEST);
-		panel.add(vCurseurSup, BorderLayout.EAST);
-		setSize(720, 200);	
-		setTitle("Range Slider");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(new BorderLayout());	
+		this.add(vCurseurInf,BorderLayout.WEST);
+		this.add(vCurseurSup, BorderLayout.EAST);
 		setFocusable(true);
-		setResizable(false);
 		setVisible(true);
-		this.paint(this.getGraphics());
+		//this.paintComponent(this.getGraphics());
 	}
 
 	@Override

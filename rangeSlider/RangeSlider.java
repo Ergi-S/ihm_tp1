@@ -6,6 +6,7 @@ package rangeSlider;
 public class RangeSlider {
 	public static final int min = 0;
 	public static final int max = 10;
+	public Frame f;
 
 	Curseur [] ct;
 
@@ -14,11 +15,16 @@ public class RangeSlider {
 	}
 	private int curs_inf;
 	private int curs_sup;
-
-	public RangeSlider() {
-		Curseur curs_inf = new Curseur(0,20);
-		Curseur curs_sup = new Curseur(0,20);
+	
+	public RangeSlider(int xMin, int xMax, int min, int max) {
+		f = new Frame(xMin,xMax);
+		Curseur curs_inf = new Curseur(min,max);
+		Curseur curs_sup = new Curseur(min,max);
 		ct = new Curseur [] {curs_inf, curs_sup};
+		Control c = new Control(ct,f);
+		f.addMouseListener(c);
+		f.addMouseMotionListener(c);
+		f.addKeyListener(c);
 	}
 
 	public void setCurseur(int c, int v) throws Exception {
