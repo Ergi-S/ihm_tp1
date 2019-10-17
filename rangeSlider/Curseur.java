@@ -3,6 +3,7 @@ package rangeSlider;
 public class Curseur {
 	public int valeur;
 	public int min,max;
+	public boolean isSelected = false;
 	
 	public Curseur(int x) {
 		this.valeur = x;
