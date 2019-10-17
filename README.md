@@ -12,6 +12,8 @@
  - Lorsqu'on reste appuyé sur un curseur on peut le faire glisser sur le RangeSlider afin de lui donner la valeur que l'on souhaite
  - Lorsque les deux curseurs se trouvent au même endroit, il est possivle de faire glisser seulement le curseurs inférieurs, pour replacer le curseurs supérieur cliquer dans une zone supérieur du rangeslider afin de détacher les deux curseurs.
  
+ Les libellés au dessus du rangeSlider indiquent la valeur des curseurs inférieur(A) et supérieur(B)
+ 
  ### Démo
  Cette démo simule une carte de logement. Chaque maison est représentée par un numéro qui désigne leur nombre de chambre.
  Le rangeSlider permet de choisir l'intervalle que l'on souhaite prendre afin de faire une sélection des maisons selon leur nombre de chambre
