@@ -1,28 +1,26 @@
 package rangeSlider;
 
-import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.GridLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 public class Main {
 
 	public static void main(String[] args) 
 	{
-		RangeSlider ra = new RangeSlider(15,50,0,5);
-		RangeSlider rb = new RangeSlider(15,50,0,20);
+		RangeSlider ra = new RangeSlider(100,500,0,20);
 		JFrame f = new JFrame();
-		JPanel rs = new JPanel(new BorderLayout());
-		rs.add(ra.f,BorderLayout.NORTH);
-		rs.add(rb.f,BorderLayout.SOUTH);
-		f.add(rs,BorderLayout.EAST);
 		f.setTitle("Range Slider");
+		HomeView hv = new HomeView(10,ra.ct);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setResizable(false);
+		f.setLayout(new GridLayout(2,2));
+		f.add(ra.f);
+		Button button = new Button("Valider");
+		button.addActionListener(hv);
+		f.add(button);
+		f.add(hv);
 		f.setVisible(true);
 		f.setSize(1500, 800);	
-		f.paint(f.getGraphics());
-		
-		
 	}
 }

@@ -14,6 +14,10 @@ public class Control implements MouseInputListener, KeyListener {
 	Curseur[] ct;
 	Frame f;
 
+	/*
+	 * Etat de la machine à état
+	 * 
+	 */
 	enum State {
 		Rien, Pressed, DraggedInf, DraggedSup, PressedInf, PressedSup
 	}
@@ -33,7 +37,7 @@ public class Control implements MouseInputListener, KeyListener {
 	public void mouseClicked(MouseEvent e) {
 		// System.out.println("Mouse Cliked");
 		int ex = e.getX();
-		int ey = e.getY();
+		int ey = e.getY(); //Récupère les coordonnés
 		f.paint(f.getGraphics());
 		if (f.rect[0].contains(ex, ey))
 			System.out.println("Curseur Inferieur");
@@ -46,13 +50,14 @@ public class Control implements MouseInputListener, KeyListener {
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// System.out.println("Mouse Dragged");
-		int ex = e.getX();
+		int ex = e.getX(); //récupère les coordonnés
 		int ey = e.getY();
 		int posX;
 		int posY;
 		switch (state) {
-		case Pressed:
-			if (f.rect[0].contains(ex, ey)) {
+		case Pressed: 
+
+			if (f.rect[0].contains(ex, ey)) { // on test si on click sur le curseur inférieur
 				this.state = State.DraggedInf;
 				if (ex > f.rect[1].x) {
 					f.rect[0].x = f.rect[1].x;
@@ -61,16 +66,12 @@ public class Control implements MouseInputListener, KeyListener {
 				} else {
 					f.rect[0].x = ex;
 				}
-				// ct[0].valeur = (f.rect[0].x - (f.xMin - ct[0].min)) / (((f.xMax - 30) -
-				// (f.xMin - ct[0].min)) / ct[0].max);
-				ct[0].valeur = ct[0].min + ((ct[0].max - ct[0].min) / (f.xMax - f.xMin)) * (f.rect[0].x - f.xMin);
+				ct[0].valeur = ct[0].min + ((ct[0].max - ct[0].min) / (f.xMax - f.xMin)) * (f.rect[0].x - f.xMin);  //on met à jour la valeur en fonction de la pos en x
 				this.f.vCurseurInf.setText("Curseur A : " + new Integer(ct[0].valeur).toString());
 				ct[0].isSelected = true;
 				ct[1].isSelected = false;
 				f.paint(f.getGraphics());
-				// posX = e.getX();
-				// posY = e.getY();
-			} else if (f.rect[1].contains(ex, ey)) {
+			} else if (f.rect[1].contains(ex, ey)) { //On test si on click sur le curseur suppérieur
 				this.state = State.DraggedSup;
 				if (ex < f.rect[0].x) {
 					f.rect[1].x = f.rect[0].x;
@@ -81,8 +82,7 @@ public class Control implements MouseInputListener, KeyListener {
 				}
 				ct[0].isSelected = false;
 				ct[1].isSelected = true;
-				ct[1].valeur = (int) (ct[1].min
-						+ ((ct[1].max - ct[1].min) / ((float) ((f.xMax - 30) - f.xMin)) * ((f.rect[1].x) - f.xMin)));
+				ct[1].valeur = (int) (ct[1].min + ((ct[1].max - ct[1].min) / ((float) ((f.xMax - 30) - f.xMin)) * ((f.rect[1].x) - f.xMin))); 
 				this.f.vCurseurSup.setText("Curseur B : " + new Integer(ct[1].valeur).toString());
 				f.paint(f.getGraphics());
 			}
@@ -129,11 +129,12 @@ public class Control implements MouseInputListener, KeyListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		f.requestFocusInWindow();
 		int ex = e.getX();
 		int ey = e.getY();
 		switch (state) {
 		case Rien:
-			this.state = State.Pressed;
+			this.state = State.Pressed;     //  Cette étape permet de selectionner le curseur si on veut le bouger avec les touches du clavier
 			if(f.rect[0].contains(ex,ey)) {
 				ct[0].isSelected = true;
 				ct[1].isSelected = false;
@@ -153,7 +154,7 @@ public class Control implements MouseInputListener, KeyListener {
 		int ex = e.getX();
 		int ey = e.getY();
 		switch (state) {
-		case Pressed:
+		case Pressed:   // On veut pouvoir clicker sur le rangeslider et placer le curseur le plus pres
 			if (!f.rect[0].contains(ex, ey) && !f.rect[1].contains(ex, ey)) {
 				if ((Math.abs(f.rect[0].x - ex) <= Math.abs(f.rect[1].x - ex)) && ex > f.rect[0].x
 						&& ex < f.rect[1].x) {
@@ -163,7 +164,7 @@ public class Control implements MouseInputListener, KeyListener {
 						f.rect[0].x = ex;
 					}
 					ct[0].valeur = (int) (ct[0].min + ((ct[0].max - ct[0].min) / ((float) ((f.xMax - 30) - f.xMin))
-							* ((f.rect[0].x) - f.xMin)));
+							* ((f.rect[0].x) - f.xMin)));  //On calcule la valeur du curseur en fonction de sa position en x
 					ct[0].isSelected = true;
 					ct[1].isSelected = false;
 					this.f.vCurseurInf.setText("Curseur A : " + new Integer(ct[0].valeur).toString());
@@ -225,17 +226,16 @@ public class Control implements MouseInputListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//System.out.println("Key PRESSED" + e.getKeyText(e.getKeyCode()));
 		int key, pas;
-		if (ct[0].isSelected == true) {
-			pas = (f.xMax - 30 - f.xMin) / (ct[0].max - ct[0].min);
+		if (ct[0].isSelected == true) {  
+			pas = (f.xMax - 30 - f.xMin) / (ct[0].max - ct[0].min); //On calcule le pas en fonction de la longueur du range slider et de la valeur max et min des curseurs
 			if ((key = e.getKeyCode()) == KeyEvent.VK_LEFT) {
-				System.out.println("Curseur droit touche left");
+				//System.out.println("Curseur droit touche left");
 				if (f.rect[0].x - pas < f.xMin) {
 					f.rect[0].x = f.xMin;
 					ct[0].valeur = ct[0].min;
 				} else {
-					ct[0].valeur--;
+					ct[0].valeur--; //Incrémente la valeur si on le peut
 					f.rect[0].x -= pas;
 
 				}
