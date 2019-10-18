@@ -1,3 +1,3 @@
-# ihm_tp2 
+# IHM TP2
 ## Ergi SALA, Tom SOLVERY
 ### INFO5 Polytech
