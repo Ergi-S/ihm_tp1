@@ -39,7 +39,7 @@ import javax.swing.SwingUtilities;
 class Paint extends JFrame {
 	Vector<Shape> shapes = new Vector<Shape>();
 	Hashtable<Shape, Color> colorShape = new Hashtable<Shape, Color>();
-
+	MenuWidget menu;
 	class Tool extends AbstractAction implements MouseInputListener {
 		Point o;
 		Shape shape;
@@ -131,12 +131,8 @@ class Paint extends JFrame {
 			super(name);
 			this.color = c;
 		}
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			/*if (!shapes.isEmpty()) {
-				colorShape.put(shapes.lastElement(), this.color);
-			}*/
 			selectedColor = this.color;
 		}
 	}
@@ -144,7 +140,7 @@ class Paint extends JFrame {
 	Tool tool;
 
 	Coloration[] colors = { new Coloration(Color.BLACK,"Noir"), new Coloration(Color.BLUE,"Bleu"), new Coloration(Color.RED,"Rouge"),
-			new Coloration(Color.GREEN,"Vert"), new Coloration(Color.YELLOW,"Jaune") };
+			new Coloration(Color.GREEN,"Vert"), new Coloration(Color.YELLOW,"Jaune")};
 
 	JPanel panel;
 	
@@ -152,8 +148,10 @@ class Paint extends JFrame {
 
 	public Paint(String title) {
 		super(title);
+	
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(800, 600));
+		this.
 		add(new JToolBar() {
 			{
 				for (AbstractAction tool : tools) {
@@ -166,6 +164,7 @@ class Paint extends JFrame {
 			}
 		}, BorderLayout.NORTH);
 		add(panel = new JPanel() {
+			
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				Graphics2D g2 = (Graphics2D) g;
@@ -177,14 +176,15 @@ class Paint extends JFrame {
 				for (Shape shape : shapes) {
 					Color c = colorShape.get(shape);
 					System.out.println(c);
-					/*if (c == null)
-						c = Color.BLACK;*/
 					g2.setColor(c);
 					g2.draw(shape);
 				}
 			}
 		});
-
+		
+		this.add(menu = new MenuWidget());
+		this.addMouseListener(menu);
+		this.addMouseMotionListener(menu);
 		pack();
 		setVisible(true);
 	}
