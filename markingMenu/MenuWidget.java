@@ -7,29 +7,28 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
-import javax.swing.JComponent;
-import javax.swing.JMenu;
+import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 
-public class MenuWidget extends JComponent implements MouseInputListener {
+public class MenuWidget extends JComponent {
 	private Ellipse2D.Double menu;
 	ArrayList<JMenu> items = new ArrayList<JMenu>();
+	JPanel panel;
 	
 
 	public MenuWidget(Ellipse2D.Double m) {
 		this.menu = m;
 	}
 
-	public MenuWidget() {
+	public MenuWidget(JPanel panel) {
 		super();
+		this.panel = panel;
 		this.menu = new Ellipse2D.Double();
 		this.setSize(100,100);
 		this.setVisible(true);
 	}
 
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	public void drawMenu(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		System.out.println("Paint");
 		if (this.isVisible()) {
@@ -40,57 +39,27 @@ public class MenuWidget extends JComponent implements MouseInputListener {
 
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
+	public void openMenu(MouseEvent e) {
 		int eX = e.getPoint().x;
 		int eY = e.getPoint().y;
+		System.out.println("Open Menu");
 		
 		if (e.getButton() == 3) {
 			System.out.println(e.getButton());
 			this.menu.setFrame(eX, eY, 75, 75);
 			this.setVisible(true);
-			this.repaint();
+			panel.repaint();
 		}
 
 	}
 
-	@Override
-	public void mouseReleased(MouseEvent e) {
+
+	public void closeMenu(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getButton() == 2) {
+		if (e.getButton() == 3) {
 			this.setVisible(false);
-			this.repaint();
+			panel.repaint();
 		}
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
