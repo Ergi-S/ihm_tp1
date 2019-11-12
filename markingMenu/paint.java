@@ -77,6 +77,7 @@ class Paint extends JFrame implements MouseInputListener {
         if (tool != null) {
             tool.toolDragged(mouseEvent);
         }
+        menu.draggedMenu(mouseEvent);
     }
 
     @Override
@@ -217,6 +218,9 @@ class Paint extends JFrame implements MouseInputListener {
             }
         });
         menu = new MenuWidget(panel);
+        panel.addMouseListener(this);
+        panel.addMouseMotionListener(this);
+
         pack();
         setVisible(true);
     }
