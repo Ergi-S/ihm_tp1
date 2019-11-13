@@ -26,6 +26,8 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 
 import java.awt.event.*;
+import java.util.concurrent.Callable;
+import javax.naming.NameAlreadyBoundException;
 import javax.swing.event.*;
 
 import javax.swing.JFrame;
@@ -41,6 +43,11 @@ class Paint extends JFrame implements MouseInputListener {
     Hashtable<Shape, Color> colorShape = new Hashtable<Shape, Color>();
     MenuWidget menu;
 
+    enum State {IDLE, DROITE, GAUCHE}
+
+    ;
+    private State state = State.IDLE;
+
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
 
@@ -48,18 +55,27 @@ class Paint extends JFrame implements MouseInputListener {
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-        if (tool != null) {
-            tool.toolPressed(mouseEvent);
+        if (mouseEvent.getButton() == 1) {
+            if (tool != null) {
+                tool.toolPressed(mouseEvent);
+            }
+            state = State.GAUCHE;
+        } else if (mouseEvent.getButton() == 3) {
+            menu.openMenu(mouseEvent);
+            state = State.DROITE;
         }
-        menu.openMenu(mouseEvent);
     }
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-        if (tool != null) {
-            tool.toolReleased(mouseEvent);
+        if (state == State.GAUCHE) {
+            if (tool != null) {
+                tool.toolReleased(mouseEvent);
+            }
+        } else if (state == State.DROITE) {
+            menu.closeMenu(mouseEvent);
         }
-        menu.closeMenu(mouseEvent);
+        state = State.IDLE;
     }
 
     @Override
@@ -74,10 +90,18 @@ class Paint extends JFrame implements MouseInputListener {
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
-        if (tool != null) {
-            tool.toolDragged(mouseEvent);
+        if(state == State.GAUCHE){
+            if (tool != null) {
+                tool.toolDragged(mouseEvent);
+            }
         }
-        menu.draggedMenu(mouseEvent);
+        if (state == State.DROITE) {
+            try {
+                menu.draggedMenu(mouseEvent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -180,7 +204,7 @@ class Paint extends JFrame implements MouseInputListener {
     Color selectedColor = Color.BLACK;
 
 
-    public Paint(String title) {
+    public Paint(String title) throws Exception {
         super(title);
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -218,6 +242,19 @@ class Paint extends JFrame implements MouseInputListener {
             }
         });
         menu = new MenuWidget(panel);
+        Stage forme = new Stage("Forme");
+        Stage couleur = new Stage("Couleur");
+        Stage test = new Stage("Test");
+        Stage test2 = new Stage("Test2");
+        Leaf orange = new Leaf("Orange") {
+            public void actionned() {
+                selectedColor = Color.ORANGE;
+            }
+        };
+        menu.addStageToStage("Main", forme);
+        menu.addStageToStage("Main", couleur);
+        menu.addLeafToStage("Couleur",orange);
+        menu.comp.setStageCourant(forme);
         panel.addMouseListener(this);
         panel.addMouseMotionListener(this);
 
@@ -225,12 +262,17 @@ class Paint extends JFrame implements MouseInputListener {
         setVisible(true);
     }
 
+
     /* main *********************************************************************/
 
     public static void main(String argv[]) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                Paint paint = new Paint("paint");
+                try {
+                    Paint paint = new Paint("paint");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
         });
