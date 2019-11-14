@@ -11,6 +11,8 @@ package markingMenu;
 import static java.lang.Math.*;
 
 import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Vector;
 
 import java.awt.BorderLayout;
@@ -90,7 +92,7 @@ class Paint extends JFrame implements MouseInputListener {
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
-        if(state == State.GAUCHE){
+        if (state == State.GAUCHE) {
             if (tool != null) {
                 tool.toolDragged(mouseEvent);
             }
@@ -244,22 +246,87 @@ class Paint extends JFrame implements MouseInputListener {
         menu = new MenuWidget(panel);
         Stage forme = new Stage("Forme");
         Stage couleur = new Stage("Couleur");
-        Stage test = new Stage("Test");
-        Stage test2 = new Stage("Test2");
-        Leaf orange = new Leaf("Orange") {
-            public void actionned() {
-                selectedColor = Color.ORANGE;
-            }
-        };
-        menu.addStageToStage("Main", forme);
-        menu.addStageToStage("Main", couleur);
-        menu.addLeafToStage("Couleur",orange);
+        Stage retourColor = new Stage("Retour");
+        Stage retourShape = new Stage("Retour");
+
+        menu.addStageToStage(menu.comp.getId(), forme);
+        menu.addStageToStage(menu.comp.getId(), couleur);
+        for (Leaf l : createColorLeaf()) {
+            menu.addLeafToStage(couleur.getId(), l);
+        }
+        for (Leaf l : createLeafShape()) {
+            menu.addLeafToStage(forme.getId(), l);
+        }
+        menu.addStageToStage(couleur.getId(),retourColor);
+        menu.addStageToStage(forme.getId(),retourShape);
         menu.comp.setStageCourant(forme);
         panel.addMouseListener(this);
         panel.addMouseMotionListener(this);
 
         pack();
         setVisible(true);
+    }
+
+    public List<Leaf> createColorLeaf() {
+        LinkedList<Leaf> leaves = new LinkedList<>();
+        leaves.add(new Leaf("Noir") {
+            public void actionned() {
+                selectedColor = Color.BLACK;
+            }
+        });
+        leaves.add(new Leaf("Orange") {
+            public void actionned() {
+                selectedColor = Color.ORANGE;
+            }
+        });
+        leaves.add(new Leaf("Rouge") {
+            public void actionned() {
+                selectedColor = Color.RED;
+            }
+        });
+        leaves.add(new Leaf("Rose") {
+            public void actionned() {
+                selectedColor = Color.PINK;
+            }
+        });
+        leaves.add(new Leaf("Jaune") {
+            public void actionned() {
+                selectedColor = Color.YELLOW;
+            }
+        });
+        leaves.add(new Leaf("Vert") {
+            public void actionned() {
+                selectedColor = Color.GREEN;
+            }
+        });
+        leaves.add(new Leaf("Bleu") {
+            public void actionned() {
+                selectedColor = Color.BLUE;
+            }
+        });
+
+        return leaves;
+    }
+
+    public List<Leaf> createLeafShape() {
+        LinkedList<Leaf> leaves = new LinkedList<Leaf>();
+        leaves.add(new Leaf("Pen") {
+            public void actionned() {
+                tool = tools[0];
+            }
+        });
+        leaves.add(new Leaf("Rect") {
+            public void actionned() {
+                tool = tools[1];
+            }
+        });
+        leaves.add(new Leaf("Ellipse") {
+            public void actionned() {
+                tool = tools[2];
+            }
+        });
+
+        return leaves;
     }
 
 

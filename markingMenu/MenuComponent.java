@@ -6,17 +6,25 @@ import java.awt.geom.Arc2D;
 
 public abstract class MenuComponent extends JComponent {
 
-    private JPanel panel;
     private Arc2D.Double arc;
     private String name;
+    private int id;
     protected final int MAX_ITEM = 8;
 
     public MenuComponent( String name){
         this.name = name;
     }
 
-    public void setArc(Rectangle rect, int debut, int extend){
-        this.arc = new Arc2D.Double(rect,debut,extend,Arc2D.PIE);
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
+
+    public void setArc(Rectangle rect, int debut, float extend){
+        this.arc = new Arc2D.Double(rect,(float)debut,extend,Arc2D.PIE);
     }
 
     public Arc2D.Double getArc(){
