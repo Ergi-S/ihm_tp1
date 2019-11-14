@@ -13,6 +13,7 @@ public class MenuWidget extends JComponent {
     Stage main;
     JPanel panel;
     int eX, eY = 0;
+    public boolean expert;
 
 
     public MenuWidget(Ellipse2D.Double m) {
@@ -22,6 +23,7 @@ public class MenuWidget extends JComponent {
     public MenuWidget(JPanel panel) {
         super();
         this.panel = panel;
+        this.expert = false;
         Stage mainStage = new Stage("Main");
         mainStage.setId(idCourant);
         idCourant++;
@@ -70,7 +72,9 @@ public class MenuWidget extends JComponent {
     public void drawMenu(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         if (this.isVisible()) {
-            this.comp.draw(g2);
+            if (!this.expert) {
+                this.comp.draw(g2);
+            }
         }
     }
 

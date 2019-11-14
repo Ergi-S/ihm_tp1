@@ -30,13 +30,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.event.*;
 import java.util.concurrent.Callable;
 import javax.naming.NameAlreadyBoundException;
+import javax.swing.*;
 import javax.swing.event.*;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.AbstractAction;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
 
 /* paint *******************************************************************/
 
@@ -206,6 +201,8 @@ class Paint extends JFrame implements MouseInputListener {
     Color selectedColor = Color.BLACK;
 
 
+
+
     public Paint(String title) throws Exception {
         super(title);
         addMouseListener(this);
@@ -221,7 +218,14 @@ class Paint extends JFrame implements MouseInputListener {
                         for (AbstractAction c : colors) {
                             add(c);
                         }
-
+                        JCheckBox c = new JCheckBox("Mode Expert");
+                        c.addItemListener(new ItemListener() {
+                            @Override
+                            public void itemStateChanged(ItemEvent itemEvent) {
+                                menu.expert = !menu.expert;
+                            }
+                        });
+                        add(c);
                     }
                 }, BorderLayout.NORTH);
         add(panel = new JPanel() {
