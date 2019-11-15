@@ -29,10 +29,10 @@ L'utilisateur peut donc :
  
  Pour ajouter des noeuds et des feuilles dans ton menu, on dispose des fonctions suivantes : 
  
- addLeaf(Leaf l) qui ajoute une feuille au menu actuel
- addStage(Stage s) qui ajoute un noeud au menu actuel
- addLeafToStage(int parentStageId,Leaf l) qui ajoute une feuille au menu indiqué par parentStageId
- addStageToStage(int parentStageId, Stage s) qui ajoute un noeud au menu indiqué par parentStageId
+ - addLeaf(Leaf l) qui ajoute une feuille au menu actuel
+ - addStage(Stage s) qui ajoute un noeud au menu actuel
+ - addLeafToStage(int parentStageId,Leaf l) qui ajoute une feuille au menu indiqué par parentStageId
+ - addStageToStage(int parentStageId, Stage s) qui ajoute un noeud au menu indiqué par parentStageId
  
  Si on ajoute un noeud nommé "Retour", ce noeud permettra de rediriger automatiquement vers le menu principal, j'ai fait ce choix pour
 permettre à l'utilisateur d'utiliser plus facilement le mode expert en revenant à chaque fois au menu principal pour sélectionner un autre élément du menu. Exemple Forme + Couleur
