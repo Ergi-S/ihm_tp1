@@ -115,7 +115,7 @@ class Paint extends JFrame implements MouseInputListener {
         }
 
         public void actionPerformed(ActionEvent e) {
-            System.out.println("using tool " + this);
+            //System.out.println("using tool " + this);
             tool = this;
         }
 
@@ -241,7 +241,7 @@ class Paint extends JFrame implements MouseInputListener {
 
                 for (Shape shape : shapes) {
                     Color c = colorShape.get(shape);
-                    System.out.println(c);
+                    //System.out.println(c);
                     g2.setColor(c);
                     g2.draw(shape);
                 }
@@ -253,6 +253,13 @@ class Paint extends JFrame implements MouseInputListener {
         Stage couleur = new Stage("Couleur");//Menu Couleur
         Stage retourColor = new Stage("Retour");//Menu permettant le retour au menu principal
         Stage retourShape = new Stage("Retour");//Menu permettant le retour au menu principal
+        Leaf erase = new Leaf("Effacer"){
+            public void actionned(){
+                shapes.clear();
+                colorShape.clear();
+                repaint();
+            }
+        };
 
         menu.addStageToStage(menu.comp.getId(), forme); //On ajoute forme dans le menu principal
         menu.addStageToStage(menu.comp.getId(), couleur);//On ajoute couleur dans le menu principal
@@ -260,11 +267,11 @@ class Paint extends JFrame implements MouseInputListener {
             menu.addLeafToStage(couleur.getId(), l); //On ajoute toutes nos couleurs dans le menu couleur
         }
         for (Leaf l : createLeafShape()) {
-            menu.addLeafToStage(forme.getId(), l); //On ajoute toute nos formes dans le menu forme
+            menu.addLeafToStage(forme.getId(), l); //On ajoute toutes nos formes dans le menu forme
         }
         menu.addStageToStage(couleur.getId(), retourColor); // ajout du menu retour dans couleur
         menu.addStageToStage(forme.getId(), retourShape); //ajout du menu retour dans forme
-        menu.comp.setStageCourant(forme); //Défini le menu courant par défaut
+        menu.addLeafToStage(menu.comp.getId(),erase);
         panel.addMouseListener(this);
         panel.addMouseMotionListener(this);
 

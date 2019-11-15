@@ -109,11 +109,6 @@ public class MenuWidget extends JComponent {
                         this.main = comp;
                     }
                     this.comp = s; // Le nouveau menu devient celui séléctionné
-                    if (s.nbStages() > 0) {
-                        this.comp.setStageCourant(s.getStages().get(0)); // On défini un élément sélectionné par défaut
-                    } else {
-                        this.comp.setStageCourant(s.getLeaves().get(0));
-                    }
                     this.menu.setFrame(eX - 100, eY - 100, 200, 200);
                     this.setAllArcs();
                 }
@@ -163,6 +158,7 @@ public class MenuWidget extends JComponent {
         // TODO Auto-generated method stub
         if (e.getButton() == 3) {
             this.setVisible(false);
+            this.comp.setStageCourant(null);
             panel.repaint();
         }
 

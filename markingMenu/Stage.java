@@ -101,13 +101,13 @@ public class Stage extends MenuComponent {
 
         for (Stage s : this.stages) { //on dessine tous les stages
             if (s == Courant) {
-                g.setColor(Color.BLUE); //élément sélectionné est dessiné en bleu
+                g.setColor(Color.GREEN); //élément sélectionné est dessiné en bleu
             }
             name = s.getName();
-            font = g.getFontMetrics().getStringBounds(name, g); //Récupère la dimension du string name
+            font = g.getFontMetrics().getStringBounds( name , g); //Récupère la dimension du string name
             arc = s.getArc();
-            xName = (int) ((arc.width/4)*Math.cos(Math.toRadians(arc.start+arc.extent/2))); // Calcule l'emplacement en x du string name en fonction de la postion de l'arc
-            yName = (int) ((arc.height/4)*Math.sin(Math.toRadians(arc.start+arc.extent/2))); // Calcule l'emplacement en y du string name en fonction de la position de l'arc
+            xName = (int) ((arc.width/3)*Math.cos(Math.toRadians(arc.start+arc.extent/2))); // Calcule l'emplacement en x du string name en fonction de la postion de l'arc
+            yName = (int) ((arc.height/3)*Math.sin(Math.toRadians(arc.start+arc.extent/2))); // Calcule l'emplacement en y du string name en fonction de la position de l'arc
             g.draw(arc);
             g.drawString(name,(int)(arc.getCenterX() - font.getWidth()/2+xName),(int)(arc.getCenterY()-yName)); //dessine le string
             g.setColor(Color.BLACK);
@@ -119,8 +119,8 @@ public class Stage extends MenuComponent {
             name = l.getName();
             font = g.getFontMetrics().getStringBounds(name, g);
             arc = l.getArc();
-            xName = (int) ((arc.width/4)*Math.cos(Math.toRadians(arc.start+arc.extent/2)));
-            yName = (int) ((arc.height/4)*Math.sin(Math.toRadians(arc.start+arc.extent/2)));
+            xName = (int) ((arc.width/3)*Math.cos(Math.toRadians(arc.start+arc.extent/2)));
+            yName = (int) ((arc.height/3)*Math.sin(Math.toRadians(arc.start+arc.extent/2)));
             g.draw(arc);
             g.drawString(name,(int)(arc.getCenterX() - font.getWidth()/2+xName),(int)(arc.getCenterY()-yName));
             g.setColor(Color.BLACK);
