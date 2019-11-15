@@ -37,8 +37,8 @@ import javax.swing.event.*;
 
 class Paint extends JFrame implements MouseInputListener {
     Vector<Shape> shapes = new Vector<Shape>();
-    Hashtable<Shape, Color> colorShape = new Hashtable<Shape, Color>();
-    MenuWidget menu;
+    Hashtable<Shape, Color> colorShape = new Hashtable<Shape, Color>(); //Assigne une couleur à une forme afin de pouvoir la redessiner avec la bonne couleur
+    MenuWidget menu; //Marking menu
 
     enum State {IDLE, DROITE, GAUCHE}
 
@@ -52,13 +52,13 @@ class Paint extends JFrame implements MouseInputListener {
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == 1) {
+        if (mouseEvent.getButton() == 1) {  //Test click gauche
             if (tool != null) {
                 tool.toolPressed(mouseEvent);
             }
             state = State.GAUCHE;
-        } else if (mouseEvent.getButton() == 3) {
-            menu.openMenu(mouseEvent);
+        } else if (mouseEvent.getButton() == 3) { //Test click droit
+            menu.openMenu(mouseEvent); //Ouvre le marking menu
             state = State.DROITE;
         }
     }
@@ -70,7 +70,7 @@ class Paint extends JFrame implements MouseInputListener {
                 tool.toolReleased(mouseEvent);
             }
         } else if (state == State.DROITE) {
-            menu.closeMenu(mouseEvent);
+            menu.closeMenu(mouseEvent); //Ferme le marking menu
         }
         state = State.IDLE;
     }
@@ -161,7 +161,7 @@ class Paint extends JFrame implements MouseInputListener {
             colorShape.put(rect, selectedColor);
             panel.repaint();
         }
-    }, new Tool("ellipse") {
+    }, new Tool("ellipse") { //Forme cercle
         public void toolDragged(MouseEvent e) {
             Ellipse2D.Double ellipse = (Ellipse2D.Double) shape;
             if (ellipse == null) {
@@ -177,6 +177,9 @@ class Paint extends JFrame implements MouseInputListener {
         }
     }};
 
+    /*
+     * Cette classe représente les couleurs qui sont assignées au forme
+     * */
     class Coloration extends AbstractAction {
         Color color;
 
@@ -201,8 +204,6 @@ class Paint extends JFrame implements MouseInputListener {
     Color selectedColor = Color.BLACK;
 
 
-
-
     public Paint(String title) throws Exception {
         super(title);
         addMouseListener(this);
@@ -218,7 +219,7 @@ class Paint extends JFrame implements MouseInputListener {
                         for (AbstractAction c : colors) {
                             add(c);
                         }
-                        JCheckBox c = new JCheckBox("Mode Expert");
+                        JCheckBox c = new JCheckBox("Mode Expert"); //Checkbox pour activer le mode expert
                         c.addItemListener(new ItemListener() {
                             @Override
                             public void itemStateChanged(ItemEvent itemEvent) {
@@ -248,22 +249,22 @@ class Paint extends JFrame implements MouseInputListener {
             }
         });
         menu = new MenuWidget(panel);
-        Stage forme = new Stage("Forme");
-        Stage couleur = new Stage("Couleur");
-        Stage retourColor = new Stage("Retour");
-        Stage retourShape = new Stage("Retour");
+        Stage forme = new Stage("Forme"); //Menu Forme
+        Stage couleur = new Stage("Couleur");//Menu Couleur
+        Stage retourColor = new Stage("Retour");//Menu permettant le retour au menu principal
+        Stage retourShape = new Stage("Retour");//Menu permettant le retour au menu principal
 
-        menu.addStageToStage(menu.comp.getId(), forme);
-        menu.addStageToStage(menu.comp.getId(), couleur);
+        menu.addStageToStage(menu.comp.getId(), forme); //On ajoute forme dans le menu principal
+        menu.addStageToStage(menu.comp.getId(), couleur);//On ajoute couleur dans le menu principal
         for (Leaf l : createColorLeaf()) {
-            menu.addLeafToStage(couleur.getId(), l);
+            menu.addLeafToStage(couleur.getId(), l); //On ajoute toutes nos couleurs dans le menu couleur
         }
         for (Leaf l : createLeafShape()) {
-            menu.addLeafToStage(forme.getId(), l);
+            menu.addLeafToStage(forme.getId(), l); //On ajoute toute nos formes dans le menu forme
         }
-        menu.addStageToStage(couleur.getId(),retourColor);
-        menu.addStageToStage(forme.getId(),retourShape);
-        menu.comp.setStageCourant(forme);
+        menu.addStageToStage(couleur.getId(), retourColor); // ajout du menu retour dans couleur
+        menu.addStageToStage(forme.getId(), retourShape); //ajout du menu retour dans forme
+        menu.comp.setStageCourant(forme); //Défini le menu courant par défaut
         panel.addMouseListener(this);
         panel.addMouseMotionListener(this);
 

@@ -8,9 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Stage extends MenuComponent {
-    private List<Stage> stages;
-    private List<Leaf> leaves;
-    private MenuComponent Courant;
+    private List<Stage> stages; //Les stages sont les éléments du menu permettant de se diriger vers un autre menu
+    private List<Leaf> leaves; // Les leaves sont les éléments du menu permettant de réaliser une action
+    private MenuComponent Courant; //L'élement du menu actuellement selectionné
 
     public Stage(String name) {
         super(name);
@@ -99,20 +99,20 @@ public class Stage extends MenuComponent {
         Rectangle2D font;
         Arc2D.Double arc;
 
-        for (Stage s : this.stages) {
+        for (Stage s : this.stages) { //on dessine tous les stages
             if (s == Courant) {
-                g.setColor(Color.BLUE);
+                g.setColor(Color.BLUE); //élément sélectionné est dessiné en bleu
             }
             name = s.getName();
-            font = g.getFontMetrics().getStringBounds(name, g);
+            font = g.getFontMetrics().getStringBounds(name, g); //Récupère la dimension du string name
             arc = s.getArc();
-            xName = (int) ((arc.width/4)*Math.cos(Math.toRadians(arc.start+arc.extent/2)));
-            yName = (int) ((arc.height/4)*Math.sin(Math.toRadians(arc.start+arc.extent/2)));
+            xName = (int) ((arc.width/4)*Math.cos(Math.toRadians(arc.start+arc.extent/2))); // Calcule l'emplacement en x du string name en fonction de la postion de l'arc
+            yName = (int) ((arc.height/4)*Math.sin(Math.toRadians(arc.start+arc.extent/2))); // Calcule l'emplacement en y du string name en fonction de la position de l'arc
             g.draw(arc);
-            g.drawString(name,(int)(arc.getCenterX() - font.getWidth()/2+xName),(int)(arc.getCenterY()-yName));
+            g.drawString(name,(int)(arc.getCenterX() - font.getWidth()/2+xName),(int)(arc.getCenterY()-yName)); //dessine le string
             g.setColor(Color.BLACK);
         }
-        for (Leaf l : this.leaves) {
+        for (Leaf l : this.leaves) { //Même chose pour les feuilles
             if (l == Courant) {
                 g.setColor(Color.BLUE);
             }

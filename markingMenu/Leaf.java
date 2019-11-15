@@ -5,7 +5,8 @@ public class Leaf extends MenuComponent {
         super(name);
     }
 
-    public void actionned() throws Exception {
+    //Cette fonction permet de définir l'action réalisée quand la feuille est sélectionnée.
+    public void actionned() {
         return;
     }
 }
