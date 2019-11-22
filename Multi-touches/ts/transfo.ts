@@ -80,20 +80,20 @@ export let rotozoom = (element: HTMLElement
 ) => {
     let dx = Pt2_coord_element.x - Pt1_coord_element.x;
     let dy = Pt2_coord_element.y - Pt1_coord_element.y;
-    let _dx = Pt2_coord_parent.x - Pt1_coord_parent.x;
-    let _dy = Pt2_coord_parent.y - Pt1_coord_parent.y;
+    let ddx = Pt2_coord_parent.x - Pt1_coord_parent.x;
+    let ddy = Pt2_coord_parent.y - Pt1_coord_parent.y;
     let s, c = 0;
 
  // On calcule tous les cas
-     if (dx === 0 && dx !== dy) {
-        s = (-_dx) / dy;
-        c = _dy / dy;
-    } else if (dx !== 0 && 0 === dy) {
-        s = _dy / dx;
-        c = _dx / dx;
-    } else if (dx !== 0 && 0 !== dy) {
-        s = ((_dy / dy) - (_dx / dx)) / ((dy / dx) + (dx / dy));
-        c = (_dx - (s * dy)) / dx;
+     if (dx === 0 && dy !== 0) {
+        s = -ddx / dy;
+        c = ddy / dy;
+    } else if (dx !== 0 && dy === 0) {
+        s = ddy / dx;
+        c = ddx / dx;
+    } else if (dx !== 0 && dy !== 0) {
+        s = ((ddy / dy) - (ddx / dx)) / ((dy / dx) + (dx / dy));
+        c = (ddx + (s * dy)) / dx;
     } else {
         return
     }
